@@ -1,0 +1,401 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<tchar.h>
+#include<stdint.h>
+#include<vector>
+#include<string>
+
+typedef struct Section
+{
+	char Name[8];
+	int VirtualSize;
+	int RVA;
+	int SizeOfRawData;
+	int PoitnerToRawData;
+	int POinterToRelocations;
+	int PointerToLineNumber;
+	WORD NumberOfRelocations;
+	WORD NumberOfLineNumbers;
+	int Characteristics;
+	int TempOffset;
+}Section;
+
+typedef struct RelocData
+{
+	int64_t TypeRva;
+	int64_t i32LoadOffset;
+	int64_t i64MemoryOffset;
+	int64_t i32FileOffset;
+}RelocData;
+
+
+#define BUF_SIZE 1024
+#define PIPE_NAME _T("\\\\.\\pipe\\FLProtectionPipe")
+
+#pragma comment(lib, "ntdll.lib")
+
+EXTERN_C NTSTATUS NTAPI NtWriteVirtualMemory(HANDLE, PVOID, PVOID, ULONG, PULONG);
+EXTERN_C NTSTATUS NTAPI NtReadVirtualMemory(HANDLE, PVOID, PVOID, ULONG, PULONG);
+EXTERN_C NTSTATUS NTAPI NtGetContextThread(HANDLE, PCONTEXT);
+EXTERN_C NTSTATUS NTAPI NtSetContextThread(HANDLE, PCONTEXT);
+EXTERN_C NTSTATUS NTAPI NtUnmapViewOfSection(HANDLE, PVOID);
+EXTERN_C NTSTATUS NTAPI NtResumeThread(HANDLE, PULONG);
+EXTERN_C NTSTATUS NTAPI NtProtectVirtualMemory(HANDLE, PVOID, PULONG, ULONG, PULONG);
+
+IMAGE_DOS_HEADER* cDosHeader = NULL;
+IMAGE_NT_HEADERS32* cNtHeader = NULL;
+IMAGE_SECTION_HEADER* cTextHeader = NULL;
+IMAGE_SECTION_HEADER* pSecH = NULL;
+char* pBuf = NULL;
+char* pBufReloc = NULL;
+char* buf = NULL;
+std::vector<std::pair<int, int> > vctSectionRva;
+char cName[0x50] = { 0 };
+
+int CommToClient(HANDLE);
+
+int main(int argc, char** argv)
+{
+	HANDLE hPipe;
+
+	while(1)
+	{
+		printf("Strat CreateNamedPipe\n");
+		hPipe = CreateNamedPipe(PIPE_NAME, PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT, PIPE_UNLIMITED_INSTANCES, BUF_SIZE, BUF_SIZE, 2000, NULL);
+
+		if(hPipe == INVALID_HANDLE_VALUE)
+		{
+			printf("CreatePipe Failed\n");
+			return -1;
+		}
+
+		BOOL bIsSuccess = false;
+		bIsSuccess = ConnectNamedPipe(hPipe, NULL);// ? TRUE : (GetLastError() == ERROR_PIPE_CONNECTED);
+
+
+		if(bIsSuccess)
+			CommToClient(hPipe);
+		else
+			CloseHandle(hPipe);
+	}
+
+	return 1;
+}
+
+int CommToClient(HANDLE hPipe)
+{
+	DWORD dwBytesWritten = BUF_SIZE;
+	DWORD dwBytesRead = BUF_SIZE;
+
+	char readDataBuf[BUF_SIZE] = { 0 };
+
+	ReadFile(hPipe, readDataBuf, BUF_SIZE * sizeof(char), &dwBytesRead, NULL);//
+
+	if(dwBytesRead != 0)
+	{
+		int64_t i64BaseAddress = 0;
+		int32_t i32GetProcessId = 0;
+		int32_t i32OEP = 0;
+		int64_t i64FileBaseAddress = 0;
+
+
+		memcpy((void*)&i64BaseAddress, (void*)&readDataBuf, 8);
+		memcpy((void*)&i32GetProcessId, (void*)&readDataBuf[8], 4);
+		memcpy((void*)&i32OEP, (void*)&readDataBuf[0xc], 4);
+		memcpy((void*)&i64FileBaseAddress, (void*)&readDataBuf[0x10], 8);
+
+		int i32cnt = 0x28;
+		int i32Namecnt = 0;
+		memset(cName, '\x0', sizeof(cName));
+		while(1)
+		{
+			if(readDataBuf[i32cnt] == '\x0')
+			{
+				break;
+			}
+			cName[i32Namecnt++] = readDataBuf[i32cnt];
+			i32cnt += 2;
+		}
+
+		printf("%llx %x\n %s\n", i64BaseAddress, i32GetProcessId, cName);
+
+		cDosHeader = new IMAGE_DOS_HEADER;
+		cNtHeader = new IMAGE_NT_HEADERS32;
+		cTextHeader = new IMAGE_SECTION_HEADER;
+
+		memset(cDosHeader, '\x0', sizeof(IMAGE_DOS_HEADER));
+		memset(cNtHeader, '\x0', sizeof(IMAGE_NT_HEADERS32));
+		memset(cTextHeader, '\x0', sizeof(IMAGE_SECTION_HEADER));
+
+
+		int64_t i64GetNumber = 0;
+		HANDLE hGetHandle = OpenProcess(MAXIMUM_ALLOWED, TRUE, i32GetProcessId);
+
+		int32_t i32OffsetNtHeader = 0;
+
+		int32_t i32OffsetToText = 0;
+
+		ReadProcessMemory((HANDLE)hGetHandle, (PVOID)i64BaseAddress, cDosHeader, sizeof(IMAGE_DOS_HEADER), (PULONGLONG)i64GetNumber);
+
+		memcpy((void*)&i32OffsetNtHeader, (void*)&cDosHeader->e_lfanew, 4);
+
+		ReadProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32OffsetNtHeader), cNtHeader, sizeof(IMAGE_NT_HEADERS32), (PULONGLONG)i64GetNumber);
+
+		int32_t i32RelocRVA = 0;
+		int32_t i32RelocPointerToRawData = 0;
+		int32_t i32RelocSizeofRawData = 0;
+		int32_t i32RelocVirtualSize = 0;
+
+		int32_t i32VirtualSizeText = 0;
+		int32_t i32PointerToRawData = 0;
+		int32_t i32RVA = 0;
+		int32_t i32SizeOfRawData = 0;
+		int32_t i32FileTextRva = 0;
+		int32_t i32SizeOfCode = cNtHeader->OptionalHeader.SizeOfCode;
+		int32_t i32TextSection = 0;
+		int32_t i32CfgSection = -2;
+		int32_t i32cfgRVA = 0;
+		int32_t i32cfgPointerToRawData = 0;
+		int32_t i32cfgSizeofRawData = 0;
+
+
+		int32_t i32DataRVA = 0;
+		int32_t i32DataSizeOfRawData = 0;
+		int32_t i32DataPointerToRawData = 0;
+		int32_t i32DataVirtualSize = 0;
+
+		for(int i = 0; i < cNtHeader->FileHeader.NumberOfSections; i++)
+		{
+			int32_t i32SectionOffset = (int32_t)(cDosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS) + (i * sizeof(IMAGE_SECTION_HEADER)));
+			IMAGE_SECTION_HEADER* pSecH = new IMAGE_SECTION_HEADER;
+
+			ReadProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32SectionOffset), pSecH, sizeof(IMAGE_SECTION_HEADER), (PULONGLONG)i64GetNumber);
+
+			vctSectionRva.push_back({ pSecH->VirtualAddress , pSecH->PointerToRawData });
+
+			if(!strcmp((const char*)pSecH->Name, ".text"))
+			{
+				i32PointerToRawData = pSecH->PointerToRawData;
+				i32RVA = pSecH->VirtualAddress;
+				i32SizeOfRawData = pSecH->SizeOfRawData;
+
+				i32VirtualSizeText = pSecH->Misc.VirtualSize;
+				i32FileTextRva = cDosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS) + (i * sizeof(IMAGE_SECTION_HEADER));
+				i32FileTextRva += 0xc;
+				i32TextSection = i;
+			}
+			else if(!strcmp((const char*)pSecH->Name, ".reloc"))
+			{
+				i32RelocRVA = pSecH->VirtualAddress;
+				i32RelocPointerToRawData = pSecH->PointerToRawData;
+				i32RelocSizeofRawData = pSecH->SizeOfRawData;
+				i32RelocVirtualSize = pSecH->Misc.VirtualSize;
+			}
+			else if(!strcmp((const char*)pSecH->Name, ".00cfg"))
+			{
+				i32cfgRVA = pSecH->VirtualAddress;
+				i32cfgPointerToRawData = pSecH->PointerToRawData;
+				i32cfgSizeofRawData = pSecH->SizeOfRawData;
+				i32CfgSection = i;
+			}
+			else if(!strcmp((const char*)pSecH->Name, ".data"))
+			{
+				i32DataRVA = pSecH->VirtualAddress;
+				i32DataSizeOfRawData = pSecH->SizeOfRawData;;
+				i32DataPointerToRawData = pSecH->PointerToRawData;;
+				i32DataVirtualSize = pSecH->Misc.VirtualSize;
+			}
+
+
+			delete[] pSecH;
+		}
+
+
+		int32_t i32SizeOfImage = cNtHeader->OptionalHeader.SizeOfImage;
+
+		int64_t i64SizeOfImageTemp = i32SizeOfImage - i32RVA;
+
+		pBuf = new char[i64SizeOfImageTemp];
+		memset(pBuf, '\x00', sizeof(char) * i64SizeOfImageTemp);
+		ReadProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32RVA), pBuf, i64SizeOfImageTemp, (PULONGLONG)i64GetNumber);
+
+		for(int i = 0; i < i32SizeOfCode; i++)
+		{
+			pBuf[i] = ~pBuf[i];
+		}
+
+		int32_t i32DataStart = i32DataRVA - i32RVA;
+		
+		for(int i = i32DataStart; i < i32DataSizeOfRawData + i32DataStart; i++)
+		{
+			pBuf[i] = ~pBuf[i];
+		}
+
+		pBufReloc = new char[i32RelocVirtualSize];
+		memset(pBufReloc, '\x00', sizeof(char) * i32RelocVirtualSize);
+		ReadProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32RelocRVA), pBufReloc, i32RelocVirtualSize, NULL);
+
+		int32_t i32RelocCnt = 0;
+
+		FILE* fp = fopen(cName, "rb");
+		size_t stSize = 0;
+		if(fp)
+		{
+			fseek(fp, 0, SEEK_END);//
+			stSize = ftell(fp);
+			buf = new char[stSize];
+			memset(buf, '\x00', sizeof(char) * stSize);
+			fseek(fp, 0, SEEK_SET);
+			fread(buf, stSize, 1, fp);
+
+			fclose(fp);
+		}
+
+		std::vector<RelocData > vctCheck;
+		vctCheck.clear();
+		while(1)
+		{
+			int32_t i32RVAofBlock = 0;
+			int32_t i32SizeofBlock = 0;
+			memcpy((void*)&i32RVAofBlock, (void*)&pBufReloc[i32RelocCnt], 4);
+			i32RelocCnt += 4;
+			memcpy((void*)&i32SizeofBlock, (void*)&pBufReloc[i32RelocCnt], 4);
+			i32RelocCnt += 4;
+			if(i32SizeofBlock == 0)
+				break;
+
+			int32_t i32SecionIdx = -1;
+
+			for(int i = 0; i < vctSectionRva.size() - 1; i++)
+			{
+				int32_t i32FromRva = vctSectionRva[i].first;
+				int32_t i32ToRva = vctSectionRva[i + 1].first;
+
+				if(i32FromRva <= i32RVAofBlock && i32RVAofBlock < i32ToRva)
+				{
+					i32SecionIdx = i;
+					break;
+				}
+			}
+			int32_t i32BaseRelocationSize = i32SizeofBlock - 8;
+			/*		if ((i32TextSection != i32SecionIdx) && (i32SecionIdx != i32CfgSection))
+					{
+						i32RelocCnt += i32BaseRelocationSize;
+						continue;
+					}*/
+			for(int i = 0; i < i32BaseRelocationSize; i += 2)
+			{
+				int64_t i64Delta = i64BaseAddress - i64FileBaseAddress;
+			/*	if (i32Delta > i32FileBaseAddress)
+					i32Delta = i32Delta - i32FileBaseAddress;
+				else
+					i32Delta = i32FileBaseAddress - i32Delta;*/
+				WORD TypeRva = 0;
+				int64_t i64FileOffset = i32RVAofBlock - vctSectionRva[i32SecionIdx].first;
+
+				memcpy((void*)&TypeRva, (void*)&pBufReloc[i32RelocCnt], 2);
+				if(TypeRva == 0)
+				{
+					i32RelocCnt += 2;
+					continue;
+				}
+
+				TypeRva &= 0x0fff;
+				i64FileOffset += TypeRva + vctSectionRva[i32SecionIdx].second;
+
+				int64_t i64MemoryOffset = 0;
+
+
+				int64_t i64LoadOffset = 0;
+				i64LoadOffset = TypeRva + i32RVAofBlock - i32RVA;
+
+				/*	if (i32LoadOffset <= i32SizeOfCode)
+					{
+						for (int j = 0;j < 4;j++)
+						{
+							pBuf[i32LoadOffset + j] = ~pBuf[i32LoadOffset + j];
+						}
+					}*/
+
+				memcpy((void*)&i64MemoryOffset, (void*)&buf[i64FileOffset], 8);
+
+				i64MemoryOffset += i64Delta;
+
+				vctCheck.push_back({ TypeRva,i64LoadOffset,i64MemoryOffset,i64FileOffset });
+				//i32FileOffset += i32BaseAddress;
+				//if (TypeRva + i32RVAofBlock - vctSectionRva[i32SecionIdx].first < i32SizeOfCode)
+				memcpy((void*)&pBuf[i64LoadOffset], (void*)&i64MemoryOffset, 8);
+
+				i32RelocCnt += 2;
+			}
+
+
+		}
+
+		int32_t i32Result = WriteProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32RVA), pBuf, i64SizeOfImageTemp, NULL);
+
+		if(!i32Result)
+		{
+			printf("error code: %d \n", GetLastError());
+			return 1;
+		}
+
+
+
+		////int32_t i32SetPermission = (int32_t)VirtualAllocEx(hGetHandle, (PVOID)(i32BaseAddress-0x1000), 0x1000, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+
+		//DWORD dwOld = 0;
+
+		//NtProtectVirtualMemory(hGetHandle, (PVOID)(i32BaseAddress-0x1000),(PULONG)0x1000, PAGE_READWRITE, &dwOld);
+
+		///*if(!i32SetPermission)
+		//{
+		//	printf("error code: %d \n", GetLastError());
+		//	return 1;
+		//}*/
+
+
+		int32_t i32CheckFinishEncoding = cNtHeader->OptionalHeader.AddressOfEntryPoint + 0x478;//
+
+		int32_t i32FinshEncoding = 1;
+
+		i32Result = WriteProcessMemory((HANDLE)hGetHandle, (PVOID)(i64BaseAddress + i32CheckFinishEncoding), (void*)&i32FinshEncoding, 4, NULL);
+
+		if(!i32Result)//
+		{
+			printf("error code: %d \n", GetLastError());
+			return 1;
+		}
+
+		//int32_t i32EntryPointIdxAddress = cDosHeader->e_lfanew + 4 + sizeof(IMAGE_FILE_HEADER) + 0x10;
+
+		//char cOEP[4] = { 0 };
+		//memcpy((void*)&cOEP, (void*)&i32OEP, 4);
+
+		//i32Result = WriteProcessMemory((HANDLE)hGetHandle, (PVOID)(i32BaseAddress + Zi32EntryPointIdxAddress), cOEP, 4, NULL);
+
+		//if(!i32Result)
+		//{
+		//	printf("error code: %d \n", GetLastError());
+		//	return 1;
+		//}
+		//
+
+		vctSectionRva.clear();
+		dwBytesRead = 0;
+		if(pBuf != NULL)
+			delete pBuf;
+		if(pBufReloc != NULL)
+			delete pBufReloc;
+		if(buf != NULL)
+			delete buf;
+	}
+
+	//Sleep(5);
+	DisconnectNamedPipe(hPipe);
+	CloseHandle(hPipe);
+	return 1;
+}
