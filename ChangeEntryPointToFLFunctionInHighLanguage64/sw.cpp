@@ -39,8 +39,6 @@ int main(int argc, char* argv[])
 	strcpy(pNameSrc, argv[1]);
 	strcpy(pNameDes, argv[2]);
 
-	//strcpy(pNameSrc, "MainFunctionOriginal64.exe");
-	//strcpy(pNameDes, "MainFunction64.exe");
 
 	FILE* fp = fopen(pNameSrc, "rb");//
 
@@ -59,11 +57,11 @@ int main(int argc, char* argv[])
 		fclose(fp);
 
 		PIMAGE_DOS_HEADER pDosH;
-		PIMAGE_NT_HEADERS64 pNtH;
+		PIMAGE_NT_HEADERS pNtH;
 		PIMAGE_SECTION_HEADER pSecH;
 
 		pDosH = (PIMAGE_DOS_HEADER)buf;
-		pNtH = (PIMAGE_NT_HEADERS64)((LPBYTE)buf + pDosH->e_lfanew);
+		pNtH = (PIMAGE_NT_HEADERS)((LPBYTE)buf + pDosH->e_lfanew);
 
 		if(pNtH->Signature != 0x4550)
 		{
@@ -257,6 +255,7 @@ int main(int argc, char* argv[])
 
 		int32_t i32SizeVctDesName = vctReverseDesName.size();
 		int32_t i32TotalStackPop = 0;
+
 		if(bCheckIsDllorExe)
 		{
 			i32TotalStackPop = i32SizeVctDesName + 3;
@@ -362,7 +361,7 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = '\xc1';
 			buf[stSize + i32stSizeCnt++] = '\x01';// add rcx, 1
 
-			i32SizeNameDes = (i32SizeNameDes + 1) * 2 + 1;
+			i32SizeNameDes = (i32SizeNameDes + 1) * 2;
 			char cSizeNameDes[4] = { 0 };
 			memcpy((void*)&cSizeNameDes, (void*)&i32SizeNameDes, 4);
 
@@ -374,7 +373,7 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = cSizeNameDes[2];
 			buf[stSize + i32stSizeCnt++] = cSizeNameDes[3];
 
-			buf[stSize + i32stSizeCnt++] = '\x74';
+			buf[stSize + i32stSizeCnt++] = '\x73';
 			buf[stSize + i32stSizeCnt++] = '\xf'; // je
 
 			buf[stSize + i32stSizeCnt++] = '\x48';
@@ -387,12 +386,12 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = '\x38';
 			buf[stSize + i32stSizeCnt++] = '\x1f';// cmp byte ptr ds:[rdi], bl
 
-			buf[stSize + i32stSizeCnt++] = '\x73';
+			buf[stSize + i32stSizeCnt++] = '\x74';
 			buf[stSize + i32stSizeCnt++] = '\xdb';
 
 			buf[stSize + i32stSizeCnt++] = '\x5f';// pop rdi
 
-		
+
 
 			buf[stSize + i32stSizeCnt++] = '\x48';
 			buf[stSize + i32stSizeCnt++] = '\x8b';
@@ -449,7 +448,7 @@ int main(int argc, char* argv[])
 
 			char cSizeVctDesName[4] = { 0 };
 			i32SizeVctDesName += 3;
-			i32SizeVctDesName *= 8;
+			i32SizeVctDesName *= 4;
 			memcpy((void*)&cSizeVctDesName, (void*)&i32SizeVctDesName, 4);
 
 
@@ -632,7 +631,7 @@ int main(int argc, char* argv[])
 		char cKernel32[] = "KERNELBASE.dll";
 		int32_t i32KenrelSize = strlen(cKernel32);//
 
-		i32KenrelSize = (i32KenrelSize + 2) * 2;
+		i32KenrelSize = (i32KenrelSize + 1) * 2;
 		char cSizeKernel32[4] = { 0 };
 		memcpy((void*)&cSizeKernel32, (void*)&i32KenrelSize, 4);
 
@@ -644,7 +643,7 @@ int main(int argc, char* argv[])
 		buf[stSize + i32stSizeCnt++] = cSizeKernel32[2];
 		buf[stSize + i32stSizeCnt++] = cSizeKernel32[3];
 
-		buf[stSize + i32stSizeCnt++] = '\x74';
+		buf[stSize + i32stSizeCnt++] = '\x73';
 		buf[stSize + i32stSizeCnt++] = '\x0f'; // je
 
 		buf[stSize + i32stSizeCnt++] = '\x48';
@@ -657,7 +656,7 @@ int main(int argc, char* argv[])
 		buf[stSize + i32stSizeCnt++] = '\x38';
 		buf[stSize + i32stSizeCnt++] = '\x1f';// cmp byte ptr ds:[rdi], bl
 
-		buf[stSize + i32stSizeCnt++] = '\x73';
+		buf[stSize + i32stSizeCnt++] = '\x74';
 		buf[stSize + i32stSizeCnt++] = '\xdb';
 
 		buf[stSize + i32stSizeCnt++] = '\x5f';// pop rdi
