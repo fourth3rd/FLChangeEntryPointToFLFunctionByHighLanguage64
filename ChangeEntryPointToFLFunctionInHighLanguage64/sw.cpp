@@ -429,7 +429,7 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = '\x48';
 			buf[stSize + i32stSizeCnt++] = '\x81';
 			buf[stSize + i32stSizeCnt++] = '\xc1';
-			buf[stSize + i32stSizeCnt++] = '\x6c';
+			buf[stSize + i32stSizeCnt++] = '\x78';
 			buf[stSize + i32stSizeCnt++] = '\x04';
 			buf[stSize + i32stSizeCnt++] = '\x0';
 			buf[stSize + i32stSizeCnt++] = '\x0';// add rcx,0x46c
@@ -443,7 +443,7 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = '\xf9';
 			buf[stSize + i32stSizeCnt++] = '\x01';// cmp ecx, 1
 
-			buf[stSize + i32stSizeCnt++] = '\x72';
+			buf[stSize + i32stSizeCnt++] = '\x75';
 			buf[stSize + i32stSizeCnt++] = '\x22';// jb down
 
 			char cSizeVctDesName[4] = { 0 };
@@ -644,11 +644,11 @@ int main(int argc, char* argv[])
 		buf[stSize + i32stSizeCnt++] = cSizeKernel32[3];
 
 		buf[stSize + i32stSizeCnt++] = '\x73';
-		buf[stSize + i32stSizeCnt++] = '\x0f'; // je
+		buf[stSize + i32stSizeCnt++] = '\x16'; // je
 
 		buf[stSize + i32stSizeCnt++] = '\x48';
 		buf[stSize + i32stSizeCnt++] = '\x31';
-		buf[stSize + i32stSizeCnt++] = '\xd8';// xor rbx, rbx
+		buf[stSize + i32stSizeCnt++] = '\xdb';// xor rbx, rbx
 
 		buf[stSize + i32stSizeCnt++] = '\x8a';
 		buf[stSize + i32stSizeCnt++] = '\x1e';// mov bl , byte ptr ds:[rsi]
@@ -659,6 +659,16 @@ int main(int argc, char* argv[])
 		buf[stSize + i32stSizeCnt++] = '\x74';
 		buf[stSize + i32stSizeCnt++] = '\xdb';
 
+		buf[stSize + i32stSizeCnt++] = '\x80';
+		buf[stSize + i32stSizeCnt++] = '\xeb';
+		buf[stSize + i32stSizeCnt++] = '\x20';// sub bl,0x20
+
+		buf[stSize + i32stSizeCnt++] = '\x38';
+		buf[stSize + i32stSizeCnt++] = '\x1f';// cmp byte ptr ds:[rdi], bl
+
+		buf[stSize + i32stSizeCnt++] = '\x74';
+		buf[stSize + i32stSizeCnt++] = '\xd4';
+
 		buf[stSize + i32stSizeCnt++] = '\x5f';// pop rdi
 
 		buf[stSize + i32stSizeCnt++] = '\x48';
@@ -666,7 +676,7 @@ int main(int argc, char* argv[])
 		buf[stSize + i32stSizeCnt++] = '\x12';// mov rdx, qword ptr ds:[rdx]
 
 		buf[stSize + i32stSizeCnt++] = '\xeb';
-		buf[stSize + i32stSizeCnt++] = '\xcd';// jmp up
+		buf[stSize + i32stSizeCnt++] = '\xc6';// jmp up
 
 		//buf[stSize + i32stSizeCnt++] = '\xeb';
 		//buf[stSize + i32stSizeCnt++] = '\xfe';
@@ -1759,15 +1769,12 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		buf[stSize + 0x46c] = '\x00';
-		buf[stSize + 0x46d] = '\x00';
-		buf[stSize + 0x46e] = '\x00';
-		buf[stSize + 0x46f] = '\x00';
+		buf[stSize + 0x47c] = '\x00';
+		buf[stSize + 0x47d] = '\x00';
+		buf[stSize + 0x47e] = '\x00';
+		buf[stSize + 0x47f] = '\x00';
 
-		buf[stSize + 0x470] = '\x00';
-		buf[stSize + 0x471] = '\x00';
-		buf[stSize + 0x472] = '\x00';
-		buf[stSize + 0x473] = '\x00';
+                                  
 
 
 		std::vector<std::pair<int, int> > vctRelocationVector;
