@@ -198,7 +198,13 @@ int main(int argc, char* argv[])
 		int32_t* ModifiedSizeOfImage = (int32_t*)(pNtH->OptionalHeader.SizeOfImage + i32FLSize);
 		int32_t* ModifiedEntryPoint = (int32_t*)(i32RelocRVA + i32Start - i32RelocPointerToRawData);
 		WORD* NumberOfSection = (WORD*)(pNtH->FileHeader.NumberOfSections);
+		WORD wDllCharacteristics = (WORD)pNtH->OptionalHeader.DllCharacteristics;
+		if((wDllCharacteristics & IMAGE_DLLCHARACTERISTICS_GUARD_CF) == IMAGE_DLLCHARACTERISTICS_GUARD_CF)
+		{
+			wDllCharacteristics ^= IMAGE_DLLCHARACTERISTICS_GUARD_CF;
+		}
 
+		memcpy((void*)&pNtH->OptionalHeader.DllCharacteristics, (void*)&wDllCharacteristics, 2);
 		memcpy((void*)&pNtH->OptionalHeader.SizeOfImage, (void*)&ModifiedSizeOfImage, 4);
 		memcpy((void*)&pNtH->OptionalHeader.AddressOfEntryPoint, (void*)&ModifiedEntryPoint, 4);
 		memcpy((void*)&pNtH->FileHeader.NumberOfSections, (void*)&NumberOfSection, 2);
