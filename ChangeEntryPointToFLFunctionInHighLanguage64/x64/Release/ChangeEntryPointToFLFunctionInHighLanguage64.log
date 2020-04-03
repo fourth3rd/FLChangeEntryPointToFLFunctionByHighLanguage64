@@ -3,17 +3,17 @@ C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunction
 C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(198,90): warning C4312: '형식 캐스트': 'DWORD'에서 더 큰 'int32_t *'(으)로의 변환입니다.
 C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(199,94): warning C4312: '형식 캐스트': 'int32_t'에서 더 큰 'int32_t *'(으)로의 변환입니다.
 C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(251,44): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(262,55): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(638,44): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1647,34): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1648,33): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1690,58): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1702,54): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1714,64): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1726,50): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1739,42): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1754,46): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1767,66): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(264,55): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(640,44): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1649,34): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1650,33): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1692,58): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1704,54): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1716,64): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1728,50): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1741,42): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1756,46): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\ChangeEntryPointToFLFunctionInHighLanguage64\sw.cpp(1769,66): warning C4267: '초기화 중': 'size_t'에서 'int32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   코드를 생성하고 있습니다.
   1 of 258 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

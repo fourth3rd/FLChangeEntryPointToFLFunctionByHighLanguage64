@@ -249,22 +249,24 @@ int main(int argc, char* argv[])
 		std::vector<std::string> vctReverseDesName;
 
 		int32_t i32SizeNameDes = strlen(pNameDes);
+		int32_t i32NameCnt = 1;
 		for(int32_t i = 0; i < i32SizeNameDes; i += 4)
 		{
 			for(int32_t j = 0; j < 4; j++)
 			{
 				strReverseDesName.push_back(pNameDes[i + j]);
 			}
+			i32NameCnt++;
 			vctReverseDesName.push_back(strReverseDesName);
 			strReverseDesName.clear();
 		}
-
+		i32NameCnt++;
 		int32_t i32SizeVctDesName = vctReverseDesName.size();
 		int32_t i32TotalStackPop = 0;
 
 		if(bCheckIsDllorExe)
 		{
-			i32TotalStackPop = i32SizeVctDesName + 3;
+			i32TotalStackPop = i32NameCnt+1;
 
 
 			buf[stSize + i32stSizeCnt++] = '\x6a';
@@ -290,7 +292,7 @@ int main(int argc, char* argv[])
 				buf[stSize + i32stSizeCnt++] = '\x50';
 			}
 			vctReverseDesName.clear();
-
+			i32SizeVctDesName += 3;
 
 			buf[stSize + i32stSizeCnt++] = '\x54';//push rsp
 
@@ -453,8 +455,8 @@ int main(int argc, char* argv[])
 			buf[stSize + i32stSizeCnt++] = '\x22';// jb down
 
 			char cSizeVctDesName[4] = { 0 };
-			i32SizeVctDesName += 3;
-			i32SizeVctDesName *= 4;
+			//i32SizeVctDesName +=2;
+			i32SizeVctDesName *= 8;
 			memcpy((void*)&cSizeVctDesName, (void*)&i32SizeVctDesName, 4);
 
 
