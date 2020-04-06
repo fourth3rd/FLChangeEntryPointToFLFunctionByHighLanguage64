@@ -1,2 +1,2 @@
 ﻿  sw.cpp
-LINK : fatal error LNK1168: C:\Users\정찬호\source\repos\ChangeEntryPointToFLFunctionInHighLanguage64\x64\Debug\IPCTest64.exe을(를) 쓰기용으로 열 수 없습니다.
+  IPCTest64.vcxproj -> C:\git\ChangeEntryPointToFLFunctionInHighLanguage64\x64\Debug\IPCTest64.exe
