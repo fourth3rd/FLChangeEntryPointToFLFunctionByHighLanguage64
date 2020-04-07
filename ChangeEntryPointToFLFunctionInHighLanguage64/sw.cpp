@@ -48,8 +48,6 @@ int main(int argc, char* argv[])
 	/*strcpy(pNameSrc, argv[1]);
 	strcpy(pNameDes, argv[2]);*/
 
-	strcpy(pNameSrc, "RavidCoreDOriginal.dll");
-	strcpy(pNameDes, "RavidCoreD.dll");
 
 
 	FILE* fp = fopen(pNameSrc, "rb");//
