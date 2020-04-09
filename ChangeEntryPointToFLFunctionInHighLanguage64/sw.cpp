@@ -33,11 +33,11 @@ typedef struct DataDirectories
 
 int main(int argc, char* argv[])
 {
-	//if(argc != 3)
-	//{
-	//	printf("FLProtection.exe Source Destion");
-	//	return 1;
-	//}
+	if(argc != 3)
+	{
+		printf("FLProtection.exe Source Destion");
+		return 1;
+	}
 
 	char pNameSrc[0x300] = { 0 };
 	char pNameDes[0x300] = { 0 };
@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
 	memset(pNameDes, '\x00', sizeof(pNameDes));
 	memset(pNameSrc, '\x00', sizeof(pNameSrc));
 
-	/*strcpy(pNameSrc, argv[1]);
-	strcpy(pNameDes, argv[2]);*/
+	strcpy(pNameSrc, argv[1]);
+	strcpy(pNameDes, argv[2]);
 
 
 
@@ -504,9 +504,9 @@ int main(int argc, char* argv[])
 			buf[i32FileStart + i32stSizeCnt++] = '\x81';
 			buf[i32FileStart + i32stSizeCnt++] = '\xc1';
 			buf[i32FileStart + i32stSizeCnt++] = '\x78';
-			buf[i32FileStart + i32stSizeCnt++] = '\x04';
+			buf[i32FileStart + i32stSizeCnt++] = '\x06';
 			buf[i32FileStart + i32stSizeCnt++] = '\x0';
-			buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rcx,0x46c
+			buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rcx,0x678
 
 			buf[i32FileStart + i32stSizeCnt++] = '\x48';
 			buf[i32FileStart + i32stSizeCnt++] = '\x8b';
@@ -630,7 +630,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';// 
 		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
 		buf[i32FileStart + i32stSizeCnt++] = '\x00';
-		buf[i32FileStart + i32stSizeCnt++] = '\x04';
+		buf[i32FileStart + i32stSizeCnt++] = '\x06';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -891,9 +891,9 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc7';
 		buf[i32FileStart + i32stSizeCnt++] = '\x00';
-		buf[i32FileStart + i32stSizeCnt++] = '\x05';
+		buf[i32FileStart + i32stSizeCnt++] = '\x07';
 		buf[i32FileStart + i32stSizeCnt++] = '\x00';
-		buf[i32FileStart + i32stSizeCnt++] = '\x00';// add rdi, 0x500
+		buf[i32FileStart + i32stSizeCnt++] = '\x00';// add rdi, 0x700
 
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x8a';
@@ -1102,9 +1102,9 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc1';
 		buf[i32FileStart + i32stSizeCnt++] = '\x20';
-		buf[i32FileStart + i32stSizeCnt++] = '\x05';
+		buf[i32FileStart + i32stSizeCnt++] = '\x07';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x0';//add rcx,0x520
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';//add rcx,0x720
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1146,7 +1146,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
 		buf[i32FileStart + i32stSizeCnt++] = '\x40';
-		buf[i32FileStart + i32stSizeCnt++] = '\x05';
+		buf[i32FileStart + i32stSizeCnt++] = '\x07';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -1182,7 +1182,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
 		buf[i32FileStart + i32stSizeCnt++] = '\x80';
-		buf[i32FileStart + i32stSizeCnt++] = '\x05';
+		buf[i32FileStart + i32stSizeCnt++] = '\x07';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -1217,7 +1217,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
 		buf[i32FileStart + i32stSizeCnt++] = '\xa0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x05';
+		buf[i32FileStart + i32stSizeCnt++] = '\x07';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -1252,7 +1252,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
 		buf[i32FileStart + i32stSizeCnt++] = '\x00';
-		buf[i32FileStart + i32stSizeCnt++] = '\x06';
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -1264,6 +1264,40 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\xff';
 		buf[i32FileStart + i32stSizeCnt++] = '\xd3';
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc4';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x50';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x30';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x54';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x40';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x81';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
+		buf[i32FileStart + i32stSizeCnt++] = '\x40';
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xec';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\xff';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
@@ -1272,52 +1306,64 @@ int main(int argc, char* argv[])
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x50';
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x38';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x54';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x81';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
+		buf[i32FileStart + i32stSizeCnt++] = '\x80';
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xec';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\xff';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc4';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x50';
+
+
+
+
+
+
+
+
+
+
+
 		//////////////////////////////////////////////¿©±â
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x48';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x8b';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x1c';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x24';// mov rbx,[rsp]
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x48';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x8b';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x4c';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x24';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x40';// mov rcx,[rsp+0x40]
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x48';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x81';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\xc1';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x00';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x06';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x0';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x0';// add rcx,0x600
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x48';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x83';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\xec';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x20';// sup rsp,0x20
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\xff';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\xd3';
-
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x48';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x83';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\xc4';
-		//buf[i32FileStart+ i32stSizeCnt++] = '\x20';
-
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x20';// mov rbx,[rsp+0x20]
+		buf[i32FileStart + i32stSizeCnt++] = '\x30';// mov rbx,[rsp+0x30]
 
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
 		buf[i32FileStart + i32stSizeCnt++] = '\xec';
-		buf[i32FileStart + i32stSizeCnt++] = '\x38';// add rsp,0x38
+		buf[i32FileStart + i32stSizeCnt++] = '\x38';// sub rsp,0x38
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc7';
@@ -1372,20 +1418,23 @@ int main(int argc, char* argv[])
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
-		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x78';// mov rcx,[rsp+0x70]
+		buf[i32FileStart + i32stSizeCnt++] = '\x88';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';// mov rcx,[rsp+0x88]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc1';
 		buf[i32FileStart + i32stSizeCnt++] = '\x20';
-		buf[i32FileStart + i32stSizeCnt++] = '\x04';
+		buf[i32FileStart + i32stSizeCnt++] = '\x06';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rcx,0x620
 
 		buf[i32FileStart + i32stSizeCnt++] = '\xff';
-		buf[i32FileStart + i32stSizeCnt++] = '\xd3';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';//<- CreateFile
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
@@ -1398,10 +1447,10 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x20';// mov rbx,[rsp+0x28]
+		buf[i32FileStart + i32stSizeCnt++] = '\x30';// mov rbx,[rsp+0x30]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\xff';
-		buf[i32FileStart + i32stSizeCnt++] = '\xd3';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';//<- GetCurrentProcessID
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x50';
 
@@ -1409,13 +1458,46 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x30';// mov rbx,[rsp+0x30]
+		buf[i32FileStart + i32stSizeCnt++] = '\x10';// mov rbx,[rsp+0x10]
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x04';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';// mov rcx,[rsp]
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x31';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd2';// mov rdx,0
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc7';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc1';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x2';// mov r8d,0x2000000
+
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xec';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\xff';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';//<-OpenProcess
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc4';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x50';
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x44';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x50';// mov rax,[rsp+0x50]
+		buf[i32FileStart + i32stSizeCnt++] = '\x68';// mov rax,[rsp+0x68]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1424,16 +1506,16 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x81';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc6';
-		buf[i32FileStart + i32stSizeCnt++] = '\x58';
-		buf[i32FileStart + i32stSizeCnt++] = '\x04';
+		buf[i32FileStart + i32stSizeCnt++] = '\xa4';
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rsi,0x458
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rsi,8a4
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x54';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x58';// r10 ,[rsp+0x58]
+		buf[i32FileStart + i32stSizeCnt++] = '\x70';// r10 ,[rsp+0x70]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1446,8 +1528,9 @@ int main(int argc, char* argv[])
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
-		buf[i32FileStart + i32stSizeCnt++] = '\x14';
-		buf[i32FileStart + i32stSizeCnt++] = '\x24';// r10,[rsp]
+		buf[i32FileStart + i32stSizeCnt++] = '\x54';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8';// r10,[rsp+8]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1503,18 +1586,71 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
 		buf[i32FileStart + i32stSizeCnt++] = '\x16';
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';// mov rbx,[rsp+0x20]
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x70';// mov rcx,[rsp+0x70]
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x54';	
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x68';// mov rdx, [rsp+0x68]
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x81';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc2';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rdx,0x8c0
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x49';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc7';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x60';
+		buf[i32FileStart + i32stSizeCnt++] = '\x2';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';//mov r8,0x260
 
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xec';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';// sub rsp,0x20
+
+		buf[i32FileStart + i32stSizeCnt++] = '\xff';
+		buf[i32FileStart + i32stSizeCnt++] = '\xd3';// call rbx <- GetModuleFileNameW
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x83';
+		buf[i32FileStart + i32stSizeCnt++] = '\xc4';
+		buf[i32FileStart + i32stSizeCnt++] = '\x20';//add rsp,0x20
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x38';// mov rbx,[rsp+0x38] <- WriteFile
+
+		buf[i32FileStart + i32stSizeCnt++] = '\x48';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
+		buf[i32FileStart + i32stSizeCnt++] = '\x44';
+		buf[i32FileStart + i32stSizeCnt++] = '\x24';
+		buf[i32FileStart + i32stSizeCnt++] = '\x68';// mov rax,[rsp+0x68]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x05';
-		buf[i32FileStart + i32stSizeCnt++] = '\x50';
-		buf[i32FileStart + i32stSizeCnt++] = '\x4';
+		buf[i32FileStart + i32stSizeCnt++] = '\xa0';
+		buf[i32FileStart + i32stSizeCnt++] = '\x8';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rax,0x450
+		buf[i32FileStart + i32stSizeCnt++] = '\x0';// add rax,0x8a0
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1523,7 +1659,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
 		buf[i32FileStart + i32stSizeCnt++] = '\xc0';
-		buf[i32FileStart + i32stSizeCnt++] = '\x08';// add rax, 4
+		buf[i32FileStart + i32stSizeCnt++] = '\x04';// add rax, 4
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1548,7 +1684,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
 		buf[i32FileStart + i32stSizeCnt++] = '\xe8';
-		buf[i32FileStart + i32stSizeCnt++] = '\x04';//sub rax, 4
+		buf[i32FileStart + i32stSizeCnt++] = '\x08';//sub rax, 4
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x49';
 		buf[i32FileStart + i32stSizeCnt++] = '\x89';
@@ -1558,7 +1694,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x4c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x8';// mov rcx,[rsp+10]
+		buf[i32FileStart + i32stSizeCnt++] = '\x10';// mov rcx,[rsp+10]
 
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
@@ -1575,12 +1711,6 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';// mov [rsp+0x20],0
-
-		buf[i32FileStart + i32stSizeCnt++] = '\x48';
-		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
-		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
-		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x48';// mov rbx,[rsp+0x48] <- WriteFile
 
 		buf[i32FileStart + i32stSizeCnt++] = '\xff';
 		buf[i32FileStart + i32stSizeCnt++] = '\xd3';// call rbx
@@ -1602,7 +1732,7 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x5c';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x18';// mov rbx,[rsp+0x18]
+		buf[i32FileStart + i32stSizeCnt++] = '\x30';// mov rbx,[rsp+0x30]
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x83';
@@ -1621,12 +1751,12 @@ int main(int argc, char* argv[])
 		buf[i32FileStart + i32stSizeCnt++] = '\x8b';
 		buf[i32FileStart + i32stSizeCnt++] = '\x44';
 		buf[i32FileStart + i32stSizeCnt++] = '\x24';
-		buf[i32FileStart + i32stSizeCnt++] = '\x50';
+		buf[i32FileStart + i32stSizeCnt++] = '\x68';
 
 		buf[i32FileStart + i32stSizeCnt++] = '\x48';
 		buf[i32FileStart + i32stSizeCnt++] = '\x05';
 		buf[i32FileStart + i32stSizeCnt++] = '\x78';
-		buf[i32FileStart + i32stSizeCnt++] = '\x04';
+		buf[i32FileStart + i32stSizeCnt++] = '\x06';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 		buf[i32FileStart + i32stSizeCnt++] = '\x0';
 
@@ -1644,7 +1774,7 @@ int main(int argc, char* argv[])
 
 
 		////////////////////
-		i32TotalStackPop += 10;
+		i32TotalStackPop += 13;
 		char cTotalStackPop[4] = { 0 };
 		i32TotalStackPop *= 8;
 		memcpy((void*)&cTotalStackPop, (void*)&i32TotalStackPop, 4);
@@ -1717,12 +1847,12 @@ int main(int argc, char* argv[])
 
 		for(int i = 0; i < i32KenrelSize; i++)
 		{
-			buf[i32FileStart + 0x400 + 2 * i] = cKernel32[i];
-			buf[i32FileStart + 0x400 + 2 * i + 1] = '\x00';
+			buf[i32FileStart + 0x600 + 2 * i] = cKernel32[i];
+			buf[i32FileStart + 0x600 + 2 * i + 1] = '\x00';
 			if(i == i32KenrelSize - 1)
 			{
-				buf[i32FileStart + 0x400 + 2 * (i + 1)] = '\x00';
-				buf[i32FileStart + 0x400 + 2 * (i + 1) + 1] = '\x00';
+				buf[i32FileStart + 0x600 + 2 * (i + 1)] = '\x00';
+				buf[i32FileStart + 0x600 + 2 * (i + 1) + 1] = '\x00';
 
 			}
 			i32stSizeCnt += 2;
@@ -1730,12 +1860,12 @@ int main(int argc, char* argv[])
 
 		for(int i = 0; i < i32PipeSize; i++)
 		{
-			buf[i32FileStart + 0x420 + 2 * i] = cPipe[i];
-			buf[i32FileStart + 0x420 + 2 * i + 1] = '\x00';
+			buf[i32FileStart + 0x620 + 2 * i] = cPipe[i];
+			buf[i32FileStart + 0x620 + 2 * i + 1] = '\x00';
 			if(i == i32PipeSize - 1)
 			{
-				buf[i32FileStart + 0x420 + 2 * (i + 1)] = '\x00';
-				buf[i32FileStart + 0x420 + 2 * (i + 1) + 1] = '\x00';
+				buf[i32FileStart + 0x620 + 2 * (i + 1)] = '\x00';
+				buf[i32FileStart + 0x620 + 2 * (i + 1) + 1] = '\x00';
 
 			}
 			i32stSizeCnt += 2;
@@ -1744,12 +1874,12 @@ int main(int argc, char* argv[])
 
 		for(int i = 0; i < i32Name; i++)
 		{
-			buf[i32FileStart + 0x480 + 2 * i] = pNameDes[i];
-			buf[i32FileStart + 0x480 + 2 * i + 1] = '\x00';
+			buf[i32FileStart + 0x680 + 2 * i] = pNameDes[i];
+			buf[i32FileStart + 0x680 + 2 * i + 1] = '\x00';
 			if(i == i32Name - 1)
 			{
-				buf[i32FileStart + 0x480 + 2 * (i + 1)] = '\x00';
-				buf[i32FileStart + 0x480 + 2 * (i + 1) + 1] = '\x00';
+				buf[i32FileStart + 0x680 + 2 * (i + 1)] = '\x00';
+				buf[i32FileStart + 0x680 + 2 * (i + 1) + 1] = '\x00';
 
 			}
 		}
@@ -1758,11 +1888,11 @@ int main(int argc, char* argv[])
 		int32_t i32GetProcAddressSize = strlen(cGetProcAddress);
 		for(int i = 0; i < i32GetProcAddressSize; i++)
 		{
-			buf[i32FileStart + 0x500 + i] = cGetProcAddress[i];
+			buf[i32FileStart + 0x700 + i] = cGetProcAddress[i];
 			if(i == i32GetProcAddressSize - 1)
 			{
-				buf[i32FileStart + 0x500 + i + 1] = '\x00';
-				buf[i32FileStart + 0x500 + i + 2] = '\x00';
+				buf[i32FileStart + 0x700 + i + 1] = '\x00';
+				buf[i32FileStart + 0x700 + i + 2] = '\x00';
 			}
 		}
 
@@ -1770,11 +1900,11 @@ int main(int argc, char* argv[])
 		int32_t i32GetCreateFileW = strlen(cGetCreateFileW);
 		for(int i = 0; i < i32GetCreateFileW; i++)
 		{
-			buf[i32FileStart + 0x520 + i] = cGetCreateFileW[i];
+			buf[i32FileStart + 0x720 + i] = cGetCreateFileW[i];
 			if(i == i32GetCreateFileW - 1)
 			{
-				buf[i32FileStart + 0x520 + i + 1] = '\x00';
-				buf[i32FileStart + 0x520 + i + 2] = '\x00';
+				buf[i32FileStart + 0x720 + i + 1] = '\x00';
+				buf[i32FileStart + 0x720 + i + 2] = '\x00';
 			}
 		}
 
@@ -1782,11 +1912,11 @@ int main(int argc, char* argv[])
 		int32_t i32GetCurrentProcessId = strlen(cGetCurrentProcessId);
 		for(int i = 0; i < i32GetCurrentProcessId; i++)
 		{
-			buf[i32FileStart + 0x540 + i] = cGetCurrentProcessId[i];
+			buf[i32FileStart + 0x740 + i] = cGetCurrentProcessId[i];
 			if(i == i32GetCurrentProcessId - 1)
 			{
-				buf[i32FileStart + 0x540 + i + 1] = '\x00';
-				buf[i32FileStart + 0x540 + i + 2] = '\x00';
+				buf[i32FileStart + 0x740 + i + 1] = '\x00';
+				buf[i32FileStart + 0x740 + i + 2] = '\x00';
 			}
 		}
 
@@ -1794,11 +1924,11 @@ int main(int argc, char* argv[])
 		int32_t i32GetWrtieFile = strlen(cGetWrtieFile);
 		for(int i = 0; i < i32GetWrtieFile; i++)
 		{
-			buf[i32FileStart + 0x580 + i] = cGetWrtieFile[i];
+			buf[i32FileStart + 0x780 + i] = cGetWrtieFile[i];
 			if(i == i32GetWrtieFile - 1)
 			{
-				buf[i32FileStart + 0x580 + i + 1] = '\x00';
-				buf[i32FileStart + 0x580 + i + 2] = '\x00';
+				buf[i32FileStart + 0x780 + i + 1] = '\x00';
+				buf[i32FileStart + 0x780 + i + 2] = '\x00';
 			}
 		}
 
@@ -1807,11 +1937,11 @@ int main(int argc, char* argv[])
 		int32_t i32GetSleep = strlen(cGetSleep);
 		for(int i = 0; i < i32GetSleep; i++)
 		{
-			buf[i32FileStart + 0x5a0 + i] = cGetSleep[i];
+			buf[i32FileStart + 0x7a0 + i] = cGetSleep[i];
 			if(i == i32GetSleep - 1)
 			{
-				buf[i32FileStart + 0x5a0 + i + 1] = '\x00';
-				buf[i32FileStart + 0x5a0 + i + 2] = '\x00';
+				buf[i32FileStart + 0x7a0 + i + 1] = '\x00';
+				buf[i32FileStart + 0x7a0 + i + 2] = '\x00';
 			}
 		}
 
@@ -1822,12 +1952,12 @@ int main(int argc, char* argv[])
 		int32_t i32GetNameDes = strlen(cGetNameDes);
 		for(int i = 0; i < i32GetNameDes; i++)
 		{
-			buf[i32FileStart + 0x5c0 + 2 * i] = cGetNameDes[i];
-			buf[i32FileStart + 0x5c0 + 2 * i + 1] = '\x00';
+			buf[i32FileStart + 0x7c0 + 2 * i] = cGetNameDes[i];
+			buf[i32FileStart + 0x7c0 + 2 * i + 1] = '\x00';
 			if(i == i32GetNameDes - 1)
 			{
-				buf[i32FileStart + 0x5c0 + 2 * (i + 1)] = '\x00';
-				buf[i32FileStart + 0x5c0 + 2 * (i + 1) + 1] = '\x00';
+				buf[i32FileStart + 0x7c0 + 2 * (i + 1)] = '\x00';
+				buf[i32FileStart + 0x7c0 + 2 * (i + 1) + 1] = '\x00';
 			}
 		}
 
@@ -1835,17 +1965,41 @@ int main(int argc, char* argv[])
 		int32_t i32GetOutPutDebugString = strlen(cGetOutPutDebugString);
 		for(int i = 0; i < i32GetOutPutDebugString; i++)
 		{
-			buf[i32FileStart + 0x600 + i] = cGetOutPutDebugString[i];
+			buf[i32FileStart + 0x800 + i] = cGetOutPutDebugString[i];
 			if(i == i32GetOutPutDebugString - 1)
 			{
-				buf[i32FileStart + 0x600 + i + 1] = '\x00';
-				buf[i32FileStart + 0x600 + i + 2] = '\x00';
+				buf[i32FileStart + 0x800 + i + 1] = '\x00';
+				buf[i32FileStart + 0x800 + i + 2] = '\x00';
 			}
 		}
 
-		buf[i32FileStart + 0x47c] = '\x00';
-		buf[i32FileStart + 0x47d] = '\x00';
-		buf[i32FileStart + 0x47e] = '\x00';
+		char cGetModuleFileNameW[] = "GetModuleFileNameW";
+		int32_t i32GetModuleFileNameW = strlen(cGetModuleFileNameW);
+		for(int i = 0; i < i32GetModuleFileNameW; i++)
+		{
+			buf[i32FileStart + 0x840 + i] = cGetModuleFileNameW[i];
+			if(i == i32GetModuleFileNameW - 1)
+			{
+				buf[i32FileStart + 0x840 + i + 1] = '\x00';
+				buf[i32FileStart + 0x840 + i + 2] = '\x00';
+			}
+		}
+
+		char cGetOpenProcess[] = "OpenProcess";
+		int32_t i32GetOpenProcess = strlen(cGetOpenProcess);
+		for(int i = 0; i < i32GetOpenProcess; i++)
+		{
+			buf[i32FileStart + 0x880 + i] = cGetOpenProcess[i];
+			if(i == i32GetOpenProcess - 1)
+			{
+				buf[i32FileStart + 0x880 + i + 1] = '\x00';
+				buf[i32FileStart + 0x880 + i + 2] = '\x00';
+			}
+		}
+
+		buf[i32FileStart + 0x67c] = '\x00';
+		buf[i32FileStart + 0x67d] = '\x00';
+		buf[i32FileStart + 0x67e] = '\x00';
 		buf[i32FileStart + 0x47f] = '\x00';
 
 		std::vector<std::pair<int, int> > vctRelocationVector;

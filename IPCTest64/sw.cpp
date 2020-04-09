@@ -123,7 +123,7 @@ int CommToClient(HANDLE hPipe)
 		printf("%llx %x\n %s\n", i64BaseAddress, i32GetProcessId, cName);
 
 		cDosHeader = new IMAGE_DOS_HEADER;
-		cNtHeader = new IMAGE_NT_HEADERS32;
+		cNtHeader = new IMAGE_NT_HEADERS64;
 		cTextHeader = new IMAGE_SECTION_HEADER;
 
 		memset(cDosHeader, '\x0', sizeof(IMAGE_DOS_HEADER));
@@ -185,8 +185,6 @@ int CommToClient(HANDLE hPipe)
 				i32SizeOfRawData = pSecH->SizeOfRawData;
 
 				i32VirtualSizeText = pSecH->Misc.VirtualSize;
-				i32FileTextRva = cDosHeader->e_lfanew + sizeof(IMAGE_NT_HEADERS) + (i * sizeof(IMAGE_SECTION_HEADER));
-				i32FileTextRva += 0xc;
 				i32TextSection = i;
 			}
 			else if(!strcmp((const char*)pSecH->Name, ".reloc"))
